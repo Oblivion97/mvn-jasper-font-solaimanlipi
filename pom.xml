@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.github.oblivion97</groupId>
+    <artifactId>jasper-font-solaimanlipi</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>SolaimanLipi for JasperReports</name>
+    <description>SolaimanLipi Bangla font (Ekushey) as a JasperReports font extension: family SolaimanLipi, embedded in PDFs</description>
+    <url>https://github.com/Oblivion97/mvn-jasper-font-solaimanlipi</url>
+
+    <licenses>
+        <license>
+            <name>SIL Open Font License 1.0</name>
+            <url>https://spdx.org/licenses/OFL-1.0.html</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>Oblivion97</id>
+            <name>H. M Mahmudul Hasan</name>
+            <url>https://github.com/Oblivion97</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/Oblivion97/mvn-jasper-font-solaimanlipi</url>
+        <connection>scm:git:https://github.com/Oblivion97/mvn-jasper-font-solaimanlipi.git</connection>
+        <developerConnection>scm:git:https://github.com/Oblivion97/mvn-jasper-font-solaimanlipi.git</developerConnection>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/Oblivion97/mvn-jasper-font-solaimanlipi/issues</url>
+    </issueManagement>
+
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Fonts are binary: never filter or re-encode them -->
+        <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
+    </properties>
+
+    <dependencies>
+        <!-- Tests render real PDFs to prove each font is registered and embedded -->
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>6.20.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <java.awt.headless>true</java.awt.headless>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!-- On JDK 9+, compile against the Java 8 API -->
+        <profile>
+            <id>java8-release</id>
+            <activation>
+                <jdk>[9,)</jdk>
+            </activation>
+            <properties>
+                <maven.compiler.release>8</maven.compiler.release>
+            </properties>
+        </profile>
+
+        <!-- Maven Central release: javadoc jar, GPG signatures, upload. See RELEASING.md -->
+        <profile>
+            <id>central-release</id>
+            <build>
+                <plugins>
+                    <!-- The font jars have no Java code; Central still requires a javadoc jar, so attach a README -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>3.4.1</version>
+                        <executions>
+                            <execution>
+                                <id>javadoc-placeholder</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                                <configuration>
+                                    <classifier>javadoc</classifier>
+                                    <classesDirectory>${project.basedir}/javadoc</classesDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.2.4</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>0.12.0</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>central</publishingServerId>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

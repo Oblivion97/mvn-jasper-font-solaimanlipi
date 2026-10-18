@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SolaimanLipi by Solaiman Karim and Al Mamun Sumon, Ekushey (https://www.ekushey.org).
+     SIL Open Font License 1.0: see META-INF/LICENSE-OFL-1.0.txt. The font files are unmodified. -->
+<fontFamilies>
+    <fontFamily name="SolaimanLipi">
+        <normal><![CDATA[io/github/oblivion97/fonts/solaimanlipi/solaimanlipi.ttf]]></normal>
+        <bold><![CDATA[io/github/oblivion97/fonts/solaimanlipi/solaimanlipi_bold.ttf]]></bold>
+        <italic><![CDATA[io/github/oblivion97/fonts/solaimanlipi/solaimanlipi_italic.ttf]]></italic>
+        <pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+        <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+        <exportFonts>
+            <export key="net.sf.jasperreports.html"><![CDATA['SolaimanLipi', sans-serif]]></export>
+        </exportFonts>
+    </fontFamily>
+</fontFamilies>
